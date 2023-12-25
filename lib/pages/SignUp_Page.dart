@@ -256,7 +256,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           onTap: () =>
                               Navigator.push(context,
                                   MaterialPageRoute(
-                                      builder: (context) => LoginEcran())),
+                                      builder: (context) => LoginPage())),
                           child: const Text(
                             "Sign in",
                             style: TextStyle(fontSize: 16,

@@ -23,7 +23,7 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future<void> init() async {
-    // Navigator.pushNamed(context, Routes.logInScreen);
+    Navigator.pushNamed(context, Routes.loginScreen);
   }
 
   @override
