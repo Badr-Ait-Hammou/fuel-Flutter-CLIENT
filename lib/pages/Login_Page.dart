@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
-import 'package:fuelflutter/pages/home_container_screen/home_container_screen.dart';
 import 'package:fuelflutter/routes.dart';
 import '../components/app_icons.dart';
 import '../components/custom_elevated_button.dart';
