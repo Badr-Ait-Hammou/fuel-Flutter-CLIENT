@@ -1,8 +1,12 @@
-import 'package:badr_s_application4/core/app_export.dart';
 import 'package:flutter/material.dart';
+import 'package:fuelflutter/components/app_icons.dart';
+import 'package:fuelflutter/components/custom_image_view.dart';
+import 'package:fuelflutter/core/utils/size_utils.dart';
+import 'package:fuelflutter/theme/custom_text_style.dart';
+import 'package:fuelflutter/theme/theme_helper.dart';
 
 class CustomBottomBar extends StatefulWidget {
-  CustomBottomBar({this.onChanged});
+  CustomBottomBar({super.key, this.onChanged});
 
   Function(BottomBarEnum)? onChanged;
 
@@ -15,26 +19,20 @@ class CustomBottomBarState extends State<CustomBottomBar> {
 
   List<BottomMenuModel> bottomMenuList = [
     BottomMenuModel(
-      icon: ImageConstant.imgHome,
-      activeIcon: ImageConstant.imgHome,
+      icon: AppIcons.imgHome,
+      activeIcon: AppIcons.imgHome,
       title: "Home",
       type: BottomBarEnum.Home,
     ),
     BottomMenuModel(
-      icon: ImageConstant.imgNavcard,
-      activeIcon: ImageConstant.imgNavcard,
-      title: "Card",
-      type: BottomBarEnum.Card,
-    ),
-    BottomMenuModel(
-      icon: ImageConstant.imgNavactivity,
-      activeIcon: ImageConstant.imgNavactivity,
-      title: "Activity",
+      icon: AppIcons.imgNavactivity,
+      activeIcon: AppIcons.imgNavactivity,
+      title: "Dashboard",
       type: BottomBarEnum.Activity,
     ),
     BottomMenuModel(
-      icon: ImageConstant.imgNavprofile,
-      activeIcon: ImageConstant.imgNavprofile,
+      icon: AppIcons.imgNavprofile,
+      activeIcon: AppIcons.imgNavprofile,
       title: "Profile",
       type: BottomBarEnum.Profile,
     )
@@ -110,7 +108,6 @@ class CustomBottomBarState extends State<CustomBottomBar> {
 
 enum BottomBarEnum {
   Home,
-  Card,
   Activity,
   Profile,
 }
@@ -133,12 +130,14 @@ class BottomMenuModel {
 }
 
 class DefaultWidget extends StatelessWidget {
+  const DefaultWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding: EdgeInsets.all(10),
-      child: Center(
+      padding: const EdgeInsets.all(10),
+      child: const Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
