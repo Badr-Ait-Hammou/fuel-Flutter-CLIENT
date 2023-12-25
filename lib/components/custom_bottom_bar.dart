@@ -28,7 +28,7 @@ class CustomBottomBarState extends State<CustomBottomBar> {
       icon: AppIcons.imgNavactivity,
       activeIcon: AppIcons.imgNavactivity,
       title: "Dashboard",
-      type: BottomBarEnum.Activity,
+      type: BottomBarEnum.Dashboard,
     ),
     BottomMenuModel(
       icon: AppIcons.imgNavprofile,
@@ -108,7 +108,7 @@ class CustomBottomBarState extends State<CustomBottomBar> {
 
 enum BottomBarEnum {
   Home,
-  Activity,
+  Dashboard,
   Profile,
 }
 

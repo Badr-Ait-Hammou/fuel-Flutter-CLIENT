@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fuelflutter/routes.dart';
 
-GlobalKey<NavigatorState> appNavigatorKey = GlobalKey();
+// GlobalKey<NavigatorState> appNavigatorKey = GlobalKey();
 void main() {
   runApp(const MyApp());
 }
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      key: appNavigatorKey,
+      // key: appNavigatorKey,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
