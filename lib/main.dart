@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fuelflutter/pages/Login_Page.dart';
+import 'package:fuelflutter/routes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const LoginEcran(),
+      initialRoute: Routes.splashScreen,
+      routes: Routes.routes,
     );
   }
 }
