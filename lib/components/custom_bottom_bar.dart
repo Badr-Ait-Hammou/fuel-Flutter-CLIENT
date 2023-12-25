@@ -6,7 +6,7 @@ import 'package:fuelflutter/theme/custom_text_style.dart';
 import 'package:fuelflutter/theme/theme_helper.dart';
 
 class CustomBottomBar extends StatefulWidget {
-  CustomBottomBar({this.onChanged});
+  CustomBottomBar({super.key, this.onChanged});
 
   Function(BottomBarEnum)? onChanged;
 
@@ -136,8 +136,8 @@ class DefaultWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding: EdgeInsets.all(10),
-      child: Center(
+      padding: const EdgeInsets.all(10),
+      child: const Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
