@@ -8,6 +8,8 @@ import 'package:fuelflutter/pages/profile_screen/profile_screen.dart';
 import 'package:fuelflutter/routes.dart';
 import 'package:fuelflutter/theme/theme_helper.dart';
 
+GlobalKey<NavigatorState> appNavigatorKey = GlobalKey();
+
 // ignore_for_file: must_be_immutable
 class HomeContainerScreen extends StatelessWidget {
   const HomeContainerScreen({Key? key}) : super(key: key);
@@ -41,7 +43,7 @@ class HomeContainerScreen extends StatelessWidget {
     switch (type) {
       case BottomBarEnum.Home:
         return Routes.homeScreen;
-      case BottomBarEnum.Activity:
+      case BottomBarEnum.Dashboard:
         return Routes.dashboard;
       case BottomBarEnum.Profile:
         return Routes.profileScreen;
