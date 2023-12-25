@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
-import 'package:fuelflutter/pages/home_container_screen/home_container_screen.dart';
-
+import 'package:fuelflutter/routes.dart';
 import '../components/app_icons.dart';
 import '../components/custom_elevated_button.dart';
 import '../components/custom_image_view.dart';
@@ -228,7 +227,7 @@ class _LoginEcranState extends State<LoginPage> {
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
     return Scaffold(
-        backgroundColor: Colors.grey,
+        backgroundColor: appTheme.gray100,
         resizeToAvoidBottomInset: false,
         body: Form(
             key: _formKey,
@@ -299,18 +298,15 @@ class _LoginEcranState extends State<LoginPage> {
                           borderDecoration:
                               TextFormFieldStyleHelper.outlinePrimaryContainer),
                       CustomElevatedButton(
-                          height: getVerticalSize(72),
-                          text: "Sign In",
-                          margin: getMargin(top: 40),
-                          buttonTextStyle:
-                              CustomTextStyles.titleMediumOnPrimarySemiBold18,
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomeContainerScreen()),
-                            );
-                          }),
+                        height: getVerticalSize(72),
+                        text: "Sign In",
+                        margin: getMargin(top: 40),
+                        buttonTextStyle:
+                            CustomTextStyles.titleMediumOnPrimarySemiBold18,
+                        buttonStyle: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.teal[300],
+                        ),
+                      ),
                       CustomOutlinedButton(
                           text: "Sign in with Google",
                           margin: getMargin(top: 40),
