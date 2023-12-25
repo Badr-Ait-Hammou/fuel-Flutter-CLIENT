@@ -326,7 +326,7 @@ class _LoginEcranState extends State<LoginPage> {
                                             .titleLargeBluegray700)),
                                 GestureDetector(
                                     onTap: () {
-                                      //  onTapTxtSignup(context);
+                                      onTapTxtSignup(context);
                                     },
                                     child: Padding(
                                         padding: getPadding(left: 8, top: 2),
@@ -342,7 +342,7 @@ class _LoginEcranState extends State<LoginPage> {
   /// The [BuildContext] parameter is used to build the navigation stack.
   /// When the action is triggered, this function uses the [Navigator] widget
   /// to push the named route for the signUpScreen.
-  // onTapTxtSignup(BuildContext context) {
-  //   Navigator.pushNamed(context, AppRoutes.addPersonScreen);
-  // }
+  onTapTxtSignup(BuildContext context) {
+    Navigator.pushNamed(context, Routes.signUpScreen);
+  }
 }
