@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:fuelflutter/routes.dart';
-
 import '../components/app_icons.dart';
 import '../components/custom_elevated_button.dart';
 import '../components/custom_image_view.dart';
@@ -227,15 +226,14 @@ class _LoginEcranState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
-    return  Scaffold(
+    return Scaffold(
         backgroundColor: appTheme.gray100,
         resizeToAvoidBottomInset: false,
         body: Form(
             key: _formKey,
             child: Container(
                 width: double.maxFinite,
-                padding:
-                getPadding(left: 27, top: 40, right: 27, bottom: 40),
+                padding: getPadding(left: 27, top: 40, right: 27, bottom: 40),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -256,8 +254,7 @@ class _LoginEcranState extends State<LoginPage> {
                           child: Padding(
                               padding: getPadding(top: 36),
                               child: Text("Phone or Email",
-                                  style:
-                                  CustomTextStyles.bodyLargeGray700))),
+                                  style: CustomTextStyles.bodyLargeGray700))),
                       CustomTextFormField(
                           //controller: phoneController,
                           margin: getMargin(top: 5),
@@ -269,19 +266,18 @@ class _LoginEcranState extends State<LoginPage> {
                                   left: 25, top: 24, right: 10, bottom: 24),
                               child: CustomImageView(
                                   svgPath: AppIcons.imgArrowdown)),
-                          prefixConstraints: BoxConstraints(
-                              maxHeight: getVerticalSize(72)),
+                          prefixConstraints:
+                              BoxConstraints(maxHeight: getVerticalSize(72)),
                           contentPadding:
-                          getPadding(top: 24, right: 30, bottom: 24),
-                          borderDecoration: TextFormFieldStyleHelper
-                              .outlinePrimaryContainer),
+                              getPadding(top: 24, right: 30, bottom: 24),
+                          borderDecoration:
+                              TextFormFieldStyleHelper.outlinePrimaryContainer),
                       Align(
                           alignment: Alignment.centerLeft,
                           child: Padding(
                               padding: getPadding(top: 25),
                               child: Text("Password",
-                                  style:
-                                  CustomTextStyles.bodyLargeGray700))),
+                                  style: CustomTextStyles.bodyLargeGray700))),
                       CustomTextFormField(
                           //controller: passwordController,
                           margin: getMargin(top: 5),
@@ -292,25 +288,25 @@ class _LoginEcranState extends State<LoginPage> {
                           prefix: Container(
                               margin: getMargin(
                                   left: 25, top: 24, right: 10, bottom: 24),
-                              child: CustomImageView(
-                                  svgPath: AppIcons.imgLock)),
-                          prefixConstraints: BoxConstraints(
-                              maxHeight: getVerticalSize(72)),
+                              child:
+                                  CustomImageView(svgPath: AppIcons.imgLock)),
+                          prefixConstraints:
+                              BoxConstraints(maxHeight: getVerticalSize(72)),
                           obscureText: true,
                           contentPadding:
-                          getPadding(top: 24, right: 30, bottom: 24),
-                          borderDecoration: TextFormFieldStyleHelper
-                              .outlinePrimaryContainer),
+                              getPadding(top: 24, right: 30, bottom: 24),
+                          borderDecoration:
+                              TextFormFieldStyleHelper.outlinePrimaryContainer),
                       CustomElevatedButton(
                         height: getVerticalSize(72),
                         text: "Sign In",
                         margin: getMargin(top: 40),
-                        buttonTextStyle: CustomTextStyles.titleMediumOnPrimarySemiBold18,
+                        buttonTextStyle:
+                            CustomTextStyles.titleMediumOnPrimarySemiBold18,
                         buttonStyle: ElevatedButton.styleFrom(
                           backgroundColor: Colors.teal[300],
                         ),
                       ),
-
                       CustomOutlinedButton(
                           text: "Sign in with Google",
                           margin: getMargin(top: 40),
@@ -333,8 +329,7 @@ class _LoginEcranState extends State<LoginPage> {
                                       onTapTxtSignup(context);
                                     },
                                     child: Padding(
-                                        padding:
-                                        getPadding(left: 8, top: 2),
+                                        padding: getPadding(left: 8, top: 2),
                                         child: Text("Sign up",
                                             style: CustomTextStyles
                                                 .titleLargePrimary)))
@@ -351,4 +346,3 @@ class _LoginEcranState extends State<LoginPage> {
     Navigator.pushNamed(context, Routes.signUpScreen);
   }
 }
-

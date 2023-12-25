@@ -30,14 +30,21 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.white,
         body: SizedBox(
           width: double.maxFinite,
-          child: CustomImageView(
-            svgPath: AppIcons.slpashIcon,
-            height: getVerticalSize(108),
-            width: getHorizontalSize(106),
-            alignment: Alignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CustomImageView(
+                svgPath: AppIcons.slpashIcon,
+                height: getVerticalSize(108),
+                width: getHorizontalSize(106),
+                alignment: Alignment.center,
+              ),
+              const CircularProgressIndicator(color: Colors.black)
+            ],
           ),
         ),
       ),
