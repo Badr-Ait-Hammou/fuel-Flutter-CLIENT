@@ -27,14 +27,14 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-        backgroundColor: appTheme.gray100,
+        backgroundColor: appTheme.gray50,
         resizeToAvoidBottomInset: false,
         body: Form(
 
             child: Container(
                 width: double.maxFinite,
                 padding:
-                getPadding(left: 27, top: 40, right: 27, bottom: 40),
+                getPadding(left: 27, top: 80, right: 27, bottom: 40),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -117,7 +117,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
                         buttonTextStyle: CustomTextStyles.titleMediumOnPrimarySemiBold18,
                         buttonStyle: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.teal[300],
+                          backgroundColor: theme.colorScheme.primary,
                         ),
                       ),
                       CustomOutlinedButton(

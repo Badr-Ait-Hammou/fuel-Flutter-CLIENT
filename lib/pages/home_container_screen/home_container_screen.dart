@@ -17,8 +17,7 @@ class HomeContainerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
-    return SafeArea(
-      child: Scaffold(
+    return  Scaffold(
         backgroundColor: appTheme.gray100,
         body: Navigator(
           key: appNavigatorKey,
@@ -34,7 +33,7 @@ class HomeContainerScreen extends StatelessWidget {
                 appNavigatorKey.currentContext!, getCurrentRoute(type));
           },
         ),
-      ),
+     
     );
   }
 

@@ -18,8 +18,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
             backgroundColor: appTheme.gray100,
             appBar: CustomAppBar(
                 leadingWidth: getHorizontalSize(68),
@@ -69,7 +68,7 @@ class HomePage extends StatelessWidget {
                                       onTapOne(context);
                                     });
                                   })))
-                    ]))));
+                    ])));
   }
 
   onTapOne(BuildContext context) {

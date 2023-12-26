@@ -37,13 +37,13 @@ class _LoginEcranState extends State<LoginPage> {
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
     return Scaffold(
-        backgroundColor: appTheme.gray100,
+        backgroundColor: appTheme.gray50,
         resizeToAvoidBottomInset: false,
         body: Form(
             key: formKey,
             child: Container(
                 width: double.maxFinite,
-                padding: getPadding(left: 27, top: 40, right: 27, bottom: 40),
+                padding: getPadding(left: 27, top: 80, right: 27, bottom: 40),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -53,7 +53,7 @@ class _LoginEcranState extends State<LoginPage> {
                           width: getSize(80)),
                       Padding(
                           padding: getPadding(top: 55),
-                          child: Text("Hello!",
+                          child: Text("Fuel Pulse",
                               style: CustomTextStyles.displayMediumBold)),
                       Padding(
                           padding: getPadding(top: 3),
@@ -114,7 +114,7 @@ class _LoginEcranState extends State<LoginPage> {
                         buttonTextStyle:
                             CustomTextStyles.titleMediumOnPrimarySemiBold18,
                         buttonStyle: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.teal[300],
+                          backgroundColor: theme.colorScheme.primary,
                         ),
                         onTap: () {
                           onTapTxtSignIn(context);

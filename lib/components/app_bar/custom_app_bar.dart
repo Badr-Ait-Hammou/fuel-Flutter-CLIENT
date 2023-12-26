@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fuelflutter/core/utils/size_utils.dart';
 
+import '../../theme/theme_helper.dart';
+
 // ignore: must_be_immutable
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   CustomAppBar({
@@ -31,9 +33,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0,
-      toolbarHeight: height ?? getVerticalSize(56),
+      toolbarHeight: height ?? getVerticalSize(30),
       automaticallyImplyLeading: false,
-      backgroundColor: Colors.transparent,
+      backgroundColor: theme.colorScheme.primary,
       leadingWidth: leadingWidth ?? 0,
       leading: leading,
       title: title,
@@ -46,6 +48,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => Size(
         mediaQueryData.size.width,
-        height ?? getVerticalSize(56),
+        height ?? getVerticalSize(30),
       );
 }

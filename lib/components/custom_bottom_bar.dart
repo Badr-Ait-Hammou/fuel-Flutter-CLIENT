@@ -41,7 +41,7 @@ class CustomBottomBarState extends State<CustomBottomBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: getVerticalSize(80),
+      height: getVerticalSize(60),
       decoration: BoxDecoration(
         color: theme.colorScheme.primary,
       ),
