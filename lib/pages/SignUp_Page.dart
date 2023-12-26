@@ -154,6 +154,6 @@ class _SignUpPageState extends State<SignUpPage> {
                     ]))));
   }
   onTapTxtSignin(BuildContext context) {
-    Navigator.pushNamed(context, Routes.chartScreen);
+    Navigator.pushNamed(context, Routes.loginScreen);
   }
 }
