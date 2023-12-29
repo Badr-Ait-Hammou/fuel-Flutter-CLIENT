@@ -41,6 +41,8 @@ dependencies:
   syncfusion_flutter_charts: ^24.1.41
   fl_chart: ^0.66.0
   http: ^1.1.2
+  flutter_secure_storage: ^9.0.0
+  fluttertoast: ^8.2.4
 
 dev_dependencies:
   flutter_test:

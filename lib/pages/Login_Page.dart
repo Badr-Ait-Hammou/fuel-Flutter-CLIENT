@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fuelflutter/pages/home_container_screen/home_container_screen.dart';
 import 'package:fuelflutter/pages/home_page/home_page.dart';
 import 'package:fuelflutter/routes.dart';
+import 'package:fuelflutter/service/auth.server.dart';
 import '../components/app_icons.dart';
 import '../components/custom_elevated_button.dart';
 import '../components/custom_image_view.dart';
@@ -66,7 +68,7 @@ class _LoginEcranState extends State<LoginPage> {
                               child: Text("Phone or Email",
                                   style: CustomTextStyles.bodyLargeGray700))),
                       CustomTextFormField(
-                          //controller: phoneController,
+                          controller: email,
                           margin: getMargin(top: 5),
                           hintText: "Email",
                           hintStyle: CustomTextStyles.bodyLargeGray70018,
@@ -89,7 +91,7 @@ class _LoginEcranState extends State<LoginPage> {
                               child: Text("Password",
                                   style: CustomTextStyles.bodyLargeGray700))),
                       CustomTextFormField(
-                          //controller: passwordController,
+                          controller: password,
                           margin: getMargin(top: 5),
                           hintText: "Password",
                           hintStyle: CustomTextStyles.bodyLargeGray70018,
@@ -159,10 +161,35 @@ class _LoginEcranState extends State<LoginPage> {
     Navigator.pushNamed(context, Routes.signUpScreen);
   }
 
-  onTapTxtSignIn(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => HomeContainerScreen()),
+  onTapTxtSignIn(BuildContext context) async {
+    try {
+      final response =
+          await Authentification().login(email.text, password.text);
+      if (response.statusCode == 200) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const HomeContainerScreen()),
+        );
+      } else {
+        showCustomToast("Login error", Colors.red);
+      }
+    } catch (e) {
+      print('Error during login: $e');
+      showCustomToast("An error occurred during login", Colors.red);
+    }
+  }
+
+  void showCustomToast(String message, Color colors) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 3,
+      backgroundColor: colors,
+      textColor: Colors.black,
+      fontSize: 16.0,
+      webShowClose: true,
+      webPosition: "center",
     );
   }
 }
