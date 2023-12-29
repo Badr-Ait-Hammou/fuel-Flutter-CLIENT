@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:fuelflutter/service/user.service.dart';
 
 class SubmitPage extends StatefulWidget {
   final double modalHeight;
@@ -92,10 +94,59 @@ class _SubmitPageState extends State<SubmitPage> {
                 ),
               ),
               SizedBox(height: screenHeight * 0.02),
+              ElevatedButton(
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    submitFuelConsumption();
+                  }
+                },
+                child: Text("Submit"),
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  void submitFuelConsumption() async {
+    if (total.text.isEmpty) {
+      showCustomToast("Veuillez remplir total price", Colors.orangeAccent);
+      return;
+    }
+    try {
+      final response = await UserService()
+          .submitFuelConsumption(type.text, double.parse(total.text));
+      if (response.statusCode == 201) {
+        showCustomToast(
+            "Fuel consumption submitted successfully", Colors.greenAccent);
+        // ignore: use_build_context_synchronously
+        Navigator.of(context).pop();
+      } else {
+        showCustomToast("Failed to submit fuel consumption.", Colors.red);
+      }
+    } catch (e) {
+      print('Error during Register: $e');
+      showCustomToast("An error occurred during Register", Colors.red);
+    }
+  }
+
+  void showCustomToast(String message, Color colors) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 3,
+      backgroundColor: colors,
+      textColor: Colors.black,
+      fontSize: 16.0,
+      webShowClose: true,
+      webPosition: "center",
     );
   }
 }

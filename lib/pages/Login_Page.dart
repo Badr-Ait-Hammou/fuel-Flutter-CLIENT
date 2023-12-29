@@ -27,7 +27,7 @@ class _LoginEcranState extends State<LoginPage> {
   bool isLoading = false;
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
-
+  bool isVisible = true;
   @override
   void dispose() {
     email.dispose();
@@ -104,7 +104,19 @@ class _LoginEcranState extends State<LoginPage> {
                                   CustomImageView(svgPath: AppIcons.imgLock)),
                           prefixConstraints:
                               BoxConstraints(maxHeight: getVerticalSize(72)),
-                          obscureText: true,
+                          suffix: IconButton(
+                            icon: Icon(
+                              isVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                isVisible = !isVisible;
+                              });
+                            },
+                          ),
+                          obscureText: isVisible,
                           contentPadding:
                               getPadding(top: 24, right: 30, bottom: 24),
                           borderDecoration:
