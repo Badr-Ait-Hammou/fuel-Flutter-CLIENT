@@ -41,31 +41,38 @@ class _SignUpPageState extends State<SignUpPage> {
                     padding:
                         getPadding(left: 27, top: 80, right: 27, bottom: 40),
                     child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                       // crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
+
                           CustomImageView(
                             svgPath: AppIcons.slpashIcon,
                             height: getSize(80),
                             width: getSize(80),
                             alignment: Alignment.center,
                           ),
+                          Padding(
+                              padding: getPadding(top: 30),
+                              child: Text("Fuel Pulse",
+                                  style: CustomTextStyles.displayMediumBold)),
+                          Padding(
+                              padding: getPadding(top: 3),
+                              child: Text("Welcome To Fuel Pulse",
+                                  style: theme.textTheme.bodyLarge)),
                           Row(
                             children: [
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Padding(
-                                      padding: getPadding(top: 61),
-                                      child: Text("Nom",
-                                          style: CustomTextStyles
-                                              .bodyLargeGray700),
-                                    ),
+                                        Padding(
+                                            padding: getPadding(top: 36),
+                                            child: Text(" FirstName",
+                                                style: CustomTextStyles.bodyLargeGray700)),
                                     CustomTextFormField(
-                                      controller: nom,
+                                      controller: prenom,
                                       margin: getMargin(top: 5),
-                                      hintText: "Nom",
+                                      hintText: "FirstName",
                                       hintStyle:
                                           CustomTextStyles.bodyLargeGray70018,
                                       textInputType: TextInputType.emailAddress,
@@ -76,7 +83,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                             right: 10,
                                             bottom: 24),
                                         child: CustomImageView(
-                                            svgPath: AppIcons.imgArrowdown),
+                                            svgPath: AppIcons.imgNavprofile),
                                       ),
                                       prefixConstraints: BoxConstraints(
                                           maxHeight: getVerticalSize(72)),
@@ -94,15 +101,15 @@ class _SignUpPageState extends State<SignUpPage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding: getPadding(top: 61),
-                                      child: Text("Prenom",
+                                      padding: getPadding(top: 36),
+                                      child: Text("LastName",
                                           style: CustomTextStyles
                                               .bodyLargeGray700),
                                     ),
                                     CustomTextFormField(
-                                      controller: prenom,
+                                      controller: nom,
                                       margin: getMargin(top: 5),
-                                      hintText: "Prenon",
+                                      hintText: "LastName",
                                       hintStyle:
                                           CustomTextStyles.bodyLargeGray70018,
                                       textInputType: TextInputType.emailAddress,
@@ -113,7 +120,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                             right: 10,
                                             bottom: 24),
                                         child: CustomImageView(
-                                            svgPath: AppIcons.imgArrowdown),
+                                            svgPath: AppIcons.imgNavprofile),
                                       ),
                                       prefixConstraints: BoxConstraints(
                                           maxHeight: getVerticalSize(72)),
@@ -127,11 +134,12 @@ class _SignUpPageState extends State<SignUpPage> {
                               ),
                             ],
                           ),
-                          Padding(
-                            padding: getPadding(top: 21),
-                            child: Text(" Email",
-                                style: CustomTextStyles.bodyLargeGray700),
-                          ),
+                          Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                  padding: getPadding(top: 20),
+                                  child: Text(" Email",
+                                      style: CustomTextStyles.bodyLargeGray700))),
                           CustomTextFormField(
                             controller: email,
                             margin: getMargin(top: 5),
@@ -151,10 +159,12 @@ class _SignUpPageState extends State<SignUpPage> {
                             borderDecoration: TextFormFieldStyleHelper
                                 .outlinePrimaryContainer,
                           ),
-                          Padding(
-                              padding: getPadding(top: 25),
-                              child: Text("Set Password",
-                                  style: CustomTextStyles.bodyLargeGray700)),
+                          Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                  padding: getPadding(top: 20),
+                                  child: Text(" Set Password",
+                                      style: CustomTextStyles.bodyLargeGray700))),
                           CustomTextFormField(
                               controller: password,
                               margin: getMargin(top: 9),
@@ -185,10 +195,12 @@ class _SignUpPageState extends State<SignUpPage> {
                                   getPadding(top: 24, right: 30, bottom: 24),
                               borderDecoration: TextFormFieldStyleHelper
                                   .outlinePrimaryContainer),
-                          Padding(
-                              padding: getPadding(top: 25),
-                              child: Text("Confirm Password",
-                                  style: CustomTextStyles.bodyLargeGray700)),
+                          Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                  padding: getPadding(top: 20),
+                                  child: Text(" Confirm Password",
+                                      style: CustomTextStyles.bodyLargeGray700))),
                           CustomTextFormField(
                               controller: passwordVerify,
                               margin: getMargin(top: 9),
@@ -223,7 +235,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           CustomElevatedButton(
                             height: getVerticalSize(72),
                             text: "Sign Up",
-                            margin: getMargin(top: 41),
+                            margin: getMargin(top: 20),
                             buttonTextStyle:
                                 CustomTextStyles.titleMediumOnPrimarySemiBold18,
                             buttonStyle: ElevatedButton.styleFrom(
@@ -235,7 +247,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                           CustomOutlinedButton(
                               text: "Sign up with Google",
-                              margin: getMargin(top: 40),
+                              margin: getMargin(top: 20),
                               leftIcon: Container(
                                   margin: getMargin(right: 16),
                                   child: CustomImageView(
@@ -243,14 +255,14 @@ class _SignUpPageState extends State<SignUpPage> {
                           Align(
                               alignment: Alignment.center,
                               child: Padding(
-                                  padding: getPadding(top: 34, bottom: 5),
+                                  padding: getPadding(top: 20, bottom: 5),
                                   child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
                                         Padding(
                                             padding: getPadding(bottom: 2),
-                                            child: Text("Have Account?",
+                                            child: Text("You Have Account?",
                                                 style: CustomTextStyles
                                                     .titleLargeBluegray700)),
                                         GestureDetector(
@@ -259,7 +271,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                             },
                                             child: Padding(
                                                 padding:
-                                                    getPadding(left: 8, top: 2),
+                                                    getPadding(left: 8),
                                                 child: Text("Sign in",
                                                     style: CustomTextStyles
                                                         .titleLargePrimary)))

@@ -54,7 +54,7 @@ class _LoginEcranState extends State<LoginPage> {
                           height: getSize(80),
                           width: getSize(80)),
                       Padding(
-                          padding: getPadding(top: 55),
+                          padding: getPadding(top: 30),
                           child: Text("Fuel Pulse",
                               style: CustomTextStyles.displayMediumBold)),
                       Padding(
@@ -65,7 +65,7 @@ class _LoginEcranState extends State<LoginPage> {
                           alignment: Alignment.centerLeft,
                           child: Padding(
                               padding: getPadding(top: 36),
-                              child: Text("Phone or Email",
+                              child: Text(" Email",
                                   style: CustomTextStyles.bodyLargeGray700))),
                       CustomTextFormField(
                           controller: email,
@@ -136,7 +136,7 @@ class _LoginEcranState extends State<LoginPage> {
                       ),
                       CustomOutlinedButton(
                           text: "Sign in with Google",
-                          margin: getMargin(top: 40),
+                          margin: getMargin(top: 30),
                           leftIcon: Container(
                               margin: getMargin(right: 18),
                               child: CustomImageView(
@@ -148,7 +148,7 @@ class _LoginEcranState extends State<LoginPage> {
                               children: [
                                 Padding(
                                     padding: getPadding(bottom: 2),
-                                    child: Text("Have Account?",
+                                    child: Text("You Don't Have An Account?",
                                         style: CustomTextStyles
                                             .titleLargeBluegray700)),
                                 GestureDetector(
@@ -156,7 +156,7 @@ class _LoginEcranState extends State<LoginPage> {
                                       onTapTxtSignup(context);
                                     },
                                     child: Padding(
-                                        padding: getPadding(left: 8, top: 2),
+                                        padding: getPadding(left: 8),
                                         child: Text("Sign up",
                                             style: CustomTextStyles
                                                 .titleLargePrimary)))
