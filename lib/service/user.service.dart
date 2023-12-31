@@ -59,7 +59,7 @@ class UserService {
         final response = await http.post(
           Uri.parse('${ApiUrl.springUrl}/api/fuel/'),
           headers: headers,
-          body: json.encode(data),
+          body: json.encode(data), 
         );
         print(
             'Request response: $response response status ${response.statusCode}');

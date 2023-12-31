@@ -13,12 +13,14 @@ class Routes {
   static const String dashboard = '/dashboard';
   static const String homeScreen = '/home';
   static const String profileScreen = '/profile';
+  // static const String opsScreen = '/operations';
   static Map<String, WidgetBuilder> routes = {
     splashScreen: (context) => SplashPage(),
     loginScreen: (context) => LoginPage(),
     signUpScreen: (context) => SignUpPage(),
     dashboard: (context) => DashboardPage(),
     homeScreen: (context) => HomeContainerScreen(),
-    profileScreen: (context) => ProfilePage()
+    profileScreen: (context) => ProfilePage(),
+    // opsScreen: (context) => CardDetailsScreen()
   };
 }

@@ -11,6 +11,8 @@ import 'package:fuelflutter/theme/app_decoration.dart';
 import 'package:fuelflutter/theme/custom_text_style.dart';
 import 'package:fuelflutter/theme/theme_helper.dart';
 
+import '../../components/custom_icon_button.dart';
+import '../../components/custom_image_view.dart';
 import 'components/options_item_widget.dart';
 
 import 'package:flutter/material.dart';
@@ -24,6 +26,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late Future<FuelModel> fuelPricesFuture;
+
   @override
   void initState() {
     super.initState();
@@ -64,24 +67,48 @@ class _HomePageState extends State<HomePage> {
                         Text("3,567.12",
                             style: CustomTextStyles.displayMediumGray10001)
                       ])),
-              // Expanded(
-              //     child: Padding(
-              //         padding: getPadding(left: 3, top: 50, right: 3),
-              //         child: GridView.builder(
-              //             shrinkWrap: true,
-              //             gridDelegate:
-              //                 SliverGridDelegateWithFixedCrossAxisCount(
-              //                     mainAxisExtent: getVerticalSize(201),
-              //                     crossAxisCount: 2,
-              //                     mainAxisSpacing: getHorizontalSize(24),
-              //                     crossAxisSpacing: getHorizontalSize(24)),
-              //             physics: const BouncingScrollPhysics(),
-              //             itemCount: 3,
-              //             itemBuilder: (context, index) {
-              //               return OptionsItemWidget(onTapOne: () {
-              //                 onTapOne(context);
-              //               });
-              //             }))),
+
+                  Padding(
+                    padding: getPadding(
+                      left: 12,
+                      top: 73,
+                      right: 12,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Today",
+                          style: theme.textTheme.headlineMedium,
+                        ),
+                        Spacer(),
+                        Padding(
+                          padding: getPadding(
+                            top: 11,
+                            bottom: 9,
+                          ),
+                          child: Text(
+                            "25 Jan",
+                            style: CustomTextStyles.labelLargeBluegray700,
+                          ),
+                        ),
+                        CustomImageView(
+                          svgPath: AppIcons.imgPlay,
+                          height: getVerticalSize(10),
+                          width: getHorizontalSize(7),
+                          margin: getMargin(
+                            left: 5,
+                            top: 18,
+                            bottom: 1,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+              SizedBox(
+                height: getVerticalSize(10),
+                width: getHorizontalSize(390),
+              ),
               FutureBuilder(
                 future: fuelPricesFuture,
                 builder: (context, snapshot) {
@@ -119,7 +146,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ])),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: const Color.fromRGBO(255, 193, 7, 1),
+          backgroundColor: const Color.fromRGBO(44, 43, 31, 1.0),
           onPressed: () {
             showModalBottomSheet(
               context: context,
@@ -148,25 +175,62 @@ class _HomePageState extends State<HomePage> {
     required double price,
     required Color color,
   }) {
-    return Card(
-      elevation: 3,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+
+    return Container(
+      padding: getPadding(
+        left: 16,
+        top: 20,
+        right: 16,
+        bottom: 12,
+      ),
+      decoration: AppDecoration.white,
+      child: Row(
+        children: [
+          CustomIconButton(
+            height: getSize(56),
+            width: getSize(56),
+            padding: getPadding(
+              all: 16,
             ),
-            const SizedBox(height: 8),
-            Text(
-              '$price MAD',
-              style: TextStyle(fontSize: 24, color: color),
+            decoration: IconButtonStyleHelper.fillGray1,
+            child: CustomImageView(
+              svgPath: AppIcons.slpashIcon,
             ),
-          ],
-        ),
+          ),
+          Padding(
+            padding: getPadding(
+              left: 12,
+              top: 4,
+              bottom: 3,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: CustomTextStyles.titleMedium18,
+                ),
+                Text(
+                  '$price MAD',
+                  style: CustomTextStyles.bodyMedium13,
+                ),
+              ],
+            ),
+          ),
+          Spacer(),
+          Padding(
+            padding: getPadding(
+              top: 3,
+              right: 46,
+              bottom: 25,
+            ),
+            child: Text(
+              "",
+              style: CustomTextStyles.titleMediumDeeporangeA700,
+            ),
+          ),
+        ],
       ),
     );
   }

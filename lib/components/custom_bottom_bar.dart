@@ -37,7 +37,6 @@ class CustomBottomBarState extends State<CustomBottomBar> {
       type: BottomBarEnum.Profile,
     )
   ];
-
   @override
   Widget build(BuildContext context) {
     return Container(
