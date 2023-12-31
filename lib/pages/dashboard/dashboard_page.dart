@@ -17,6 +17,7 @@ import '../../theme/custom_text_style.dart';
 import '../../theme/theme_helper.dart';
 import 'components/fl_pie_chart2.dart';
 import 'components/linear_chart.dart';
+import 'package:intl/intl.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -26,13 +27,11 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-
   List<TransactionData> _transactions = [];
 
   @override
   void initState() {
     super.initState();
-    // Call the method to fetch transactions when the widget is initialized
     _fetchTransactions();
   }
 
@@ -46,6 +45,43 @@ class _DashboardPageState extends State<DashboardPage> {
       print('Error fetching transactions: $e');
     }
   }
+
+  void _deleteTransaction(int transactionId) async {
+    bool confirmDelete = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Confirm Delete"),
+          content: Text("Are you sure you want to delete this transaction?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+              child: Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+              child: Text("Delete"),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (confirmDelete == true) {
+      try {
+        DashboardService dashboardService = DashboardService();
+        await dashboardService.deleteTransaction(transactionId);
+        print('Transaction deleted successfully');
+      } catch (e) {
+        print('Error deleting transaction: $e');
+      }
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -149,105 +185,141 @@ class _DashboardPageState extends State<DashboardPage> {
                   ),
                 ),
               ),
-            ),CustomCard(
-              title: 'My Custom Card Title',
+            ),
+            CustomCard(
+              title:'My Expenses',
               content: SizedBox(
-                height: height * 0.55,
+                height: height * 0.5,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 1.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       SizedBox(height: height * 0.0001),
-                      const Text(
-                        'My Expenses',
-                      ),
-                       Expanded(
+                      Expanded(
                         child: Padding(
                           padding: getPadding(
-                            left: 2,
-                            top: 2,
-                            right: 2,
+                            left: 1,
+                            top: 1,
+                            right: 1,
                           ),
                           child: ListView.separated(
                             physics: const BouncingScrollPhysics(),
                             shrinkWrap: true,
                             separatorBuilder: (
-                                context,
-                                index,
-                                ) {
+                              context,
+                              index,
+                            ) {
                               return SizedBox(
                                 height: getVerticalSize(20),
                               );
                             },
-
                             itemCount: _transactions.length,
                             itemBuilder: (context, index) {
                               TransactionData transaction = _transactions[index];
-                              return Container(
-                                padding: getPadding(
-                                  left: 10,
-                                  top: 10,
-                                  right: 10,
-                                  bottom: 10,
-                                ),
-                                decoration: AppDecoration.white,
-                                child: Row(
-                                  children: [
-                                    CustomIconButton(
-                                      height: getSize(56),
-                                      width: getSize(56),
-                                      padding: getPadding(
-                                        all: 16,
-                                      ),
-                                      decoration: IconButtonStyleHelper.fillGray1,
-                                      child: CustomImageView(
-                                        svgPath: AppIcons.slpashIcon,
+                              String formattedDate = DateFormat('EEEE, hh:mm a').format(transaction.date);
+
+
+                              return Dismissible(
+                                  key: UniqueKey(),
+                                  direction: DismissDirection.endToStart,
+                                  onDismissed: (direction) {
+                                    _deleteTransaction(transaction.id);
+                                    setState(() {
+                                      _transactions.removeAt(index);
+                                    });
+                                  },
+                                  background: Container(
+                                    alignment: AlignmentDirectional.centerEnd,
+                                    decoration:  BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      color: Colors.red,
+                                    ),
+                                    child: const Padding(
+                                      padding: EdgeInsets.only(right: 16.0),
+                                      child: Icon(
+                                        Icons.delete,
+                                        color: Colors.white,
                                       ),
                                     ),
-                                    Padding(
-                                      padding: getPadding(
-                                        left: 12,
-                                        right: 12,
-                                        top: 4,
-                                        bottom: 3,
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "${transaction.type}",
-                                            style: CustomTextStyles.titleMedium18,
+                                  ),
+                                  child: Container(
+                                    padding: getPadding(
+                                      left: 10,
+                                      top: 10,
+                                      right: 10,
+                                      bottom: 10,
+                                    ),
+                                    decoration:  BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      color: Colors.white,
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        CustomIconButton(
+                                          height: getSize(56),
+                                          width: getSize(56),
+                                          padding: getPadding(
+                                            all: 16,
                                           ),
-                                          Text(
-                                            "${transaction.date}",
-                                            style: CustomTextStyles.bodyMedium13,
-                                          ), Text(
-                                            "${transaction.litre} L",
-                                            style: CustomTextStyles.bodyMedium13,
-                                          ), Text(
-                                            "${transaction.price} Dhs",
-                                            style: CustomTextStyles.bodyMedium13,
+                                          decoration:
+                                              IconButtonStyleHelper.fillGray1,
+                                          child: CustomImageView(
+                                            svgPath: AppIcons.slpashIcon,
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                        Padding(
+                                          padding: getPadding(
+                                            left: 12,
+                                            right: 12,
+                                            top: 4,
+                                            bottom: 3,
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "${transaction.type}",
+                                                style: CustomTextStyles
+                                                    .titleMedium18,
+                                              ),
+                                              Text(
+                                                formattedDate,
+                                                style: CustomTextStyles
+                                                    .bodyMedium13,
+                                              ),
+                                              Text(
+                                                "${transaction.litre} L",
+                                                style: CustomTextStyles
+                                                    .bodyMedium13,
+                                              ),
+                                              Text(
+                                                "${transaction.price} Dhs",
+                                                style: CustomTextStyles
+                                                    .bodyMedium13,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        const Spacer(),
+                                        Padding(
+                                          padding: getPadding(
+                                            top: 3,
+                                            right: 1,
+                                            bottom: 25,
+                                          ),
+                                          child: Text(
+                                            "${transaction.totale} Dhs",
+                                            style: CustomTextStyles
+                                                .titleMediumDeeporangeA700,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    const Spacer(),
-                                    Padding(
-                                      padding: getPadding(
-                                        top: 3,
-                                        right: 1,
-                                        bottom: 25,
-                                      ),
-                                      child: Text(
-                                        "${transaction.totale} Dhs",
-                                        style: CustomTextStyles.titleMediumDeeporangeA700,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
+                                  ));
                             },
                           ),
                         ),
@@ -257,7 +329,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 ),
               ),
             ),
-                   ],
+          ],
         ),
       ),
     );

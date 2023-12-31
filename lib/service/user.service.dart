@@ -4,6 +4,8 @@ import 'package:http/http.dart' as http;
 import 'package:fuelflutter/model/fuel.model.dart';
 import 'package:fuelflutter/service/storage.service.dart';
 
+import '../model/user.model.dart';
+
 class UserService {
   Future<Map<String, dynamic>?> decodeToken() async {
     final token = await StorageService().getToken();
@@ -25,8 +27,6 @@ class UserService {
 
   Future<FuelModel> getFuelPrices() async {
     try {
-      //  String? token = await StorageService().getToken();
-      // final headers = {'Authorization': 'Bearer $token'};
       final response = await http.get(Uri.parse('${ApiUrl.flaskUrl}/prices'));
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
@@ -36,6 +36,31 @@ class UserService {
       }
     } catch (e) {
       throw Exception('Error fetching fuel prices: $e');
+    }
+  }
+
+  Future<UserModel> getUserInfo() async {
+    try {
+      final Map<String, dynamic>? decodedToken = await decodeToken();
+      if (decodedToken != null && decodedToken.containsKey('id')) {
+        final userId = decodedToken['id'];
+        final token = await StorageService().getToken();
+        final headers = {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        };
+        final response = await http.get(Uri.parse('${ApiUrl.springUrl}/api/users/$userId'),headers: headers,);
+        if (response.statusCode == 200) {
+          final Map<String, dynamic> userData = json.decode(response.body);
+          return UserModel.fromJson(userData);
+        } else {
+          throw Exception('Failed to load user information');
+        }
+      } else {
+        throw Exception('User ID not found in the decoded token');
+      }
+    } catch (e) {
+      throw Exception('Error fetching user information: $e');
     }
   }
 
@@ -55,7 +80,6 @@ class UserService {
           "user": {"id": decodedToken['id']}
         };
 
-        //  StorageService().deleteAll();
         final response = await http.post(
           Uri.parse('${ApiUrl.springUrl}/api/fuel/'),
           headers: headers,
@@ -71,4 +95,43 @@ class UserService {
       return http.Response('Error submitting fuel consumption: $e', 500);
     }
   }
+
+
+  Future<UserModel> updateProfile(String updatedNom, String updatedPrenom) async {
+    try {
+      final token = await StorageService().getToken();
+      final Map<String, dynamic>? decodedToken = await decodeToken();
+      final userId = decodedToken?['id'];
+      final headers = {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      };
+
+      final Map<String, dynamic> requestBody = {
+        'nom': updatedNom,
+        'prenom': updatedPrenom,
+      };
+
+      final response = await http.put(
+        Uri.parse('${ApiUrl.springUrl}/api/users/update/$userId'),
+        headers: headers,
+        body: json.encode(requestBody),
+      );
+      print('Update Profile Request: ${json.encode(requestBody)}');
+      print('Update Profile Response: ${response.body}');
+      print('Update Profile Status Code: ${response.statusCode}');
+
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        final Map<String, dynamic> updatedUserData = json.decode(response.body);
+        return UserModel.fromJson(updatedUserData);
+      } else {
+        throw Exception('Failed to update profile: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      print('Update Profile Error: $e');
+      throw Exception('Error updating profile: $e');
+    }
+  }
+
+
 }

@@ -41,4 +41,23 @@ class DashboardService {
 
   }
 
+  Future<void> deleteTransaction(int transactionId) async {
+    try {
+      final token = await StorageService().getToken();
+      final response = await http.delete(
+        Uri.parse('${ApiUrl.springUrl}/api/fuel/delete/$transactionId'),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode != 200) {
+        throw Exception('Failed to delete transaction');
+      }
+    } catch (e) {
+      throw Exception('Error deleting transaction: $e');
+    }
+  }
+
 }

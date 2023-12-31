@@ -5,16 +5,13 @@ import 'package:fuelflutter/components/app_icons.dart';
 import 'package:fuelflutter/core/utils/size_utils.dart';
 import 'package:fuelflutter/model/fuel.model.dart';
 import 'package:fuelflutter/pages/home_page/components/submit_page.dart';
-import 'package:fuelflutter/routes.dart';
 import 'package:fuelflutter/service/user.service.dart';
 import 'package:fuelflutter/theme/app_decoration.dart';
 import 'package:fuelflutter/theme/custom_text_style.dart';
 import 'package:fuelflutter/theme/theme_helper.dart';
-
 import '../../components/custom_icon_button.dart';
 import '../../components/custom_image_view.dart';
-import 'components/options_item_widget.dart';
-
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -40,6 +37,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
+    String formattedDate = DateFormat('dd MMM yy').format(DateTime.now());
+
     return Scaffold(
         backgroundColor: appTheme.gray100,
         appBar: CustomAppBar(
@@ -62,19 +61,24 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Total Balance",
+                        Text("Total Operations",
                             style: CustomTextStyles.bodyLargeGray10001),
-                        Text("3,567.12",
+                        Text("500 Dhs",
                             style: CustomTextStyles.displayMediumGray10001)
                       ])),
 
                   Padding(
                     padding: getPadding(
-                      left: 12,
-                      top: 73,
-                      right: 12,
+                      left: 1,
+                      top: 40,
+                      right: 1,
                     ),
-                    child: Row(
+                      child: Container(
+                        width: getHorizontalSize(360),
+                        padding: getPadding(left: 10, top: 5, right: 10, bottom: 5),
+                       // color: Colors.white60 ,
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12),color: Colors.grey[300]),
+                        child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -88,22 +92,23 @@ class _HomePageState extends State<HomePage> {
                             bottom: 9,
                           ),
                           child: Text(
-                            "25 Jan",
-                            style: CustomTextStyles.labelLargeBluegray700,
+                            formattedDate,
+                            style: CustomTextStyles.titleMedium18,
                           ),
                         ),
                         CustomImageView(
                           svgPath: AppIcons.imgPlay,
-                          height: getVerticalSize(10),
-                          width: getHorizontalSize(7),
+                          height: getVerticalSize(15),
+                          width: getHorizontalSize(15),
                           margin: getMargin(
                             left: 5,
-                            top: 18,
+                            top: 2,
                             bottom: 1,
                           ),
                         ),
                       ],
                     ),
+                      )
                   ),
               SizedBox(
                 height: getVerticalSize(10),

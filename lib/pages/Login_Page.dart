@@ -28,6 +28,7 @@ class _LoginEcranState extends State<LoginPage> {
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
   bool isVisible = true;
+
   @override
   void dispose() {
     email.dispose();
