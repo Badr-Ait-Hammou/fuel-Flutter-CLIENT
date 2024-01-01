@@ -135,5 +135,41 @@ class UserService {
     }
   }
 
+  Future<List<List<dynamic>>> getFuelAmounts() async {
+    try {
+      final token = await StorageService().getToken();
+      final decodedToken = await decodeToken();
+
+      if (decodedToken != null && decodedToken.containsKey('id')) {
+        final userId = decodedToken['id'];
+
+        final response = await http.get(
+          Uri.parse('${ApiUrl.springUrl}/api/fuel/amount/$userId'),
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        );
+
+        if (response.statusCode == 200) {
+          final List<dynamic> data = json.decode(response.body);
+
+          if (data is List) {
+            return data.cast<List<dynamic>>();
+          } else {
+            throw Exception('Invalid response format');
+          }
+        } else {
+          throw Exception('Failed to load fuel amounts');
+        }
+      } else {
+        throw Exception('User ID not found in the decoded token');
+      }
+    } catch (e) {
+      throw Exception('Error fetching fuel amounts: $e');
+    }
+  }
+
+
 
 }

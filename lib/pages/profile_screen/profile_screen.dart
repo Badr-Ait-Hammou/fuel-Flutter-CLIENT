@@ -216,7 +216,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           );
                         }
                       },
-                      child: Text('Update'),
+                      child: const Text('Update'),
                     ),
                   ],
                 ),
