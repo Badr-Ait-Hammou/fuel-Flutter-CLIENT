@@ -28,7 +28,7 @@ class _SubmitPageState extends State<SubmitPage> {
 
     return SingleChildScrollView(
       child: Container(
-        height: widget.modalHeight,
+        height: 300,
         padding: const EdgeInsets.all(16),
         child: Form(
           key: formKey,

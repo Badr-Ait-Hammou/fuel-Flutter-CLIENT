@@ -76,7 +76,6 @@ class _HomePageState extends State<HomePage> {
                       child: Container(
                         width: getHorizontalSize(360),
                         padding: getPadding(left: 10, top: 5, right: 10, bottom: 5),
-                       // color: Colors.white60 ,
                         decoration: BoxDecoration(borderRadius: BorderRadius.circular(12),color: Colors.grey[300]),
                         child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -130,19 +129,16 @@ class _HomePageState extends State<HomePage> {
                         priceCard(
                           title: 'Gasoil',
                           price: fuelPrices.gasoil,
-                          color: Colors.blue,
                         ),
                         SizedBox(height: 16),
                         priceCard(
                           title: 'SansPlomb',
                           price: fuelPrices.sansPlomb,
-                          color: Colors.green,
                         ),
                         SizedBox(height: 16),
                         priceCard(
                           title: 'Excellium',
                           price: fuelPrices.excellium,
-                          color: Colors.orange,
                         ),
                       ],
                     );
@@ -167,7 +163,7 @@ class _HomePageState extends State<HomePage> {
             );
           },
           tooltip: 'Add',
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add,color: Colors.white),
         ));
   }
 
@@ -178,7 +174,6 @@ class _HomePageState extends State<HomePage> {
   Widget priceCard({
     required String title,
     required double price,
-    required Color color,
   }) {
 
     return Container(

@@ -97,7 +97,7 @@ class UserService {
   }
 
 
-  Future<UserModel> updateProfile(String updatedNom, String updatedPrenom) async {
+  Future<UserModel?> updateProfile(String updatedNom, String updatedPrenom) async {
     try {
       final token = await StorageService().getToken();
       final Map<String, dynamic>? decodedToken = await decodeToken();
@@ -106,8 +106,7 @@ class UserService {
         'Authorization': 'Bearer $token',
         'Content-Type': 'application/json',
       };
-
-      final Map<String, dynamic> requestBody = {
+      final data = {
         'nom': updatedNom,
         'prenom': updatedPrenom,
       };
@@ -115,15 +114,18 @@ class UserService {
       final response = await http.put(
         Uri.parse('${ApiUrl.springUrl}/api/users/update/$userId'),
         headers: headers,
-        body: json.encode(requestBody),
+        body: json.encode(data),
       );
-      print('Update Profile Request: ${json.encode(requestBody)}');
       print('Update Profile Response: ${response.body}');
       print('Update Profile Status Code: ${response.statusCode}');
 
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        final Map<String, dynamic> updatedUserData = json.decode(response.body);
-        return UserModel.fromJson(updatedUserData);
+        if (response.body.isNotEmpty) {
+          final Map<String, dynamic> updatedUserData = json.decode(response.body);
+          return UserModel.fromJson(updatedUserData);
+        } else {
+          return null;
+        }
       } else {
         throw Exception('Failed to update profile: ${response.reasonPhrase}');
       }

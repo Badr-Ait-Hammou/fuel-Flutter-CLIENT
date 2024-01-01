@@ -3,19 +3,16 @@ import 'package:fuelflutter/components/app_bar/appbar_image.dart';
 import 'package:fuelflutter/components/app_bar/appbar_title.dart';
 import 'package:fuelflutter/components/app_bar/custom_app_bar.dart';
 import 'package:fuelflutter/components/app_icons.dart';
-import 'package:fuelflutter/components/custom_bottom_bar.dart';
 import 'package:fuelflutter/components/custom_image_view.dart';
 import 'package:fuelflutter/core/utils/size_utils.dart';
 import 'package:fuelflutter/model/user.model.dart';
 import 'package:fuelflutter/pages/Login_Page.dart';
-import 'package:fuelflutter/pages/dashboard/dashboard_page.dart';
-import 'package:fuelflutter/pages/home_page/home_page.dart';
-import 'package:fuelflutter/routes.dart';
 import 'package:fuelflutter/service/storage.service.dart';
 import 'package:fuelflutter/theme/custom_text_style.dart';
 import 'package:fuelflutter/theme/theme_helper.dart';
-
 import '../../components/custom_elevated_button.dart';
+import '../../components/custom_outlined_button.dart';
+import '../../routes.dart';
 import '../../service/user.service.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -43,7 +40,7 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: CustomAppBar(
         leadingWidth: getHorizontalSize(68),
         leading: AppbarImage(
-          svgPath: AppIcons.imgGrid,
+          svgPath: AppIcons.slpashIcon,
           margin: getMargin(
             left: 24,
             top: 6,
@@ -103,30 +100,39 @@ class _ProfilePageState extends State<ProfilePage> {
                       style: theme.textTheme.bodyMedium,
                     ),
                   ),
-                  // Rows 1-3
                   buildProfileRow(
-                    imagePath: AppIcons.imgSettings,
+                    imagePath: AppIcons.imgUser,
                     label: userData.nom,
                   ),
                   buildProfileRow(
-                    imagePath: AppIcons.imgFingerprint,
+                    imagePath: AppIcons.imgUser,
                     label: userData.prenom,
                   ),
                   buildProfileRow(
-                    imagePath: AppIcons.imgCut,
+                    imagePath: AppIcons.imgArrowdown,
                     label: userData.email,
                   ),
-                  // Buttons
-                  buildButton(
-                    label: "Logout",
-                    onTap: () {
-                      onTapSignOut(context);
-                    },
-                  ),
-                  buildButton(
-                    label: "Update Profile",
+                  CustomElevatedButton(
+                    height: getVerticalSize(72),
+                    text: "Update Profile",
+                    margin: getMargin(top: 100),
+                    buttonTextStyle:
+                        CustomTextStyles.titleMediumOnPrimarySemiBold18,
+                    buttonStyle: ElevatedButton.styleFrom(
+                      backgroundColor: theme.colorScheme.primary,
+                    ),
                     onTap: () {
                       _showUpdateProfileDialog(context);
+                    },
+                  ),
+                  CustomOutlinedButton(
+                    text: "Sign Out",
+                    margin: getMargin(top: 15),
+                    leftIcon: Container(
+                        margin: getMargin(right: 20),
+                        child: CustomImageView(svgPath: AppIcons.imgnavArrow)),
+                    onTap: () {
+                      onTapSignOut(context);
                     },
                   ),
                 ],
@@ -142,176 +148,139 @@ class _ProfilePageState extends State<ProfilePage> {
     final TextEditingController nomController = TextEditingController();
     final TextEditingController prenomController = TextEditingController();
 
-    return showDialog(
+    await showModalBottomSheet(
       context: context,
+      //isScrollControlled: true,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Update Profile'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: nomController,
-                decoration: InputDecoration(labelText: 'Nom'),
-              ),
-              TextField(
-                controller: prenomController,
-                decoration: InputDecoration(labelText: 'Prenom'),
-              ),
-            ],
+        return SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'Update Profile',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 6.0),
+                TextField(
+                  controller: nomController,
+                  decoration: InputDecoration(labelText: 'Nom'),
+                ),
+                TextField(
+                  controller: prenomController,
+                  decoration: InputDecoration(labelText: 'Prenom'),
+                ),
+                SizedBox(height: 6.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('Cancel'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        final String updatedNom = nomController.text;
+                        final String updatedPrenom = prenomController.text;
+                        try {
+                          await UserService()
+                              .updateProfile(updatedNom, updatedPrenom);
+                          setState(() {
+                            _userDataFuture = UserService().getUserInfo();
+                          });
+                          Navigator.of(context).pop();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Profile updated successfully'),
+                            ),
+                          );
+                        } catch (e) {
+                          print('Error updating profile: $e');
+                          String errorMessage = 'Failed to update profile';
+                          Navigator.of(context).pop();
+
+                          if (e is FormatException) {
+                            errorMessage = 'Invalid server response format';
+                          }
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(errorMessage),
+                            ),
+                          );
+                        }
+                      },
+                      child: Text('Update'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-          actions: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Cancel'),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                print(_userDataFuture);
-                final String updatedNom = nomController.text;
-                final String updatedPrenom = prenomController.text;
-                try {
-                  await UserService().updateProfile(updatedNom, updatedPrenom);
-                  Navigator.of(context).pop();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Profile updated successfully'),
-                    ),
-                  );
-                } catch (e) {
-                  print('Error updating profile: $e');
-                  String errorMessage = 'Failed to update profile';
-                  Navigator.of(context).pop();
-
-                  if (e is FormatException) {
-                    errorMessage = 'Invalid server response format';
-                  }
-
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(errorMessage),
-                    ),
-                  );
-                }
-
-              },
-              child: Text('Update'),
-            ),
-
-          ],
         );
       },
     );
   }
 }
-  Widget buildProfileRow({
-    required String imagePath,
-    required String label,
-  }) {
-    return Padding(
-      padding: getPadding(
-        left: 4,
-        top: 32,
-        right: 4,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          CustomImageView(
-            svgPath: imagePath,
-            height: getSize(20),
-            width: getSize(20),
-            margin: getMargin(
-              top: 5,
-            ),
-          ),
-          Padding(
-            padding: getPadding(
-              left: 16,
-            ),
-            child: Text(
-              label,
-              style: CustomTextStyles.titleLargeSemiBold,
-            ),
-          ),
-          Spacer(),
-          CustomImageView(
-            svgPath: AppIcons.imgArrowright,
-            height: getVerticalSize(14),
-            width: getHorizontalSize(8),
-            margin: getMargin(
-              top: 8,
-              bottom: 3,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
-  Widget buildButton({
-    required String label,
-    required VoidCallback onTap,
-  }) {
-    return Padding(
-      padding: getPadding(
-        left: 4,
-        top: 29,
-        right: 4,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CustomImageView(
-            svgPath: AppIcons.imgInfo,
-            height: getSize(20),
-            width: getSize(20),
-            margin: getMargin(
-              top: 3,
-              bottom: 2,
-            ),
+Widget buildProfileRow({
+  required String imagePath,
+  required String label,
+}) {
+  return Padding(
+    padding: getPadding(
+      left: 4,
+      top: 32,
+      right: 4,
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        CustomImageView(
+          svgPath: imagePath,
+          height: getSize(20),
+          width: getSize(20),
+          margin: getMargin(
+            top: 5,
           ),
-          Padding(
-            padding: getPadding(
-              left: 16,
-            ),
-            child: ElevatedButton(
-              onPressed: onTap,
-              style: ElevatedButton.styleFrom(
-                primary: theme.colorScheme.primary,
-              ),
-              child: Text(
-                label,
-                style: CustomTextStyles.titleLargeSemiBold,
-              ),
-            ),
+        ),
+        Padding(
+          padding: getPadding(
+            left: 16,
           ),
-          Spacer(),
-          CustomImageView(
-            svgPath: AppIcons.imgArrowright,
-            height: getVerticalSize(14),
-            width: getHorizontalSize(8),
-            margin: getMargin(
-              top: 6,
-              bottom: 5,
-            ),
+          child: Text(
+            label,
+            style: CustomTextStyles.titleLargeSemiBold,
           ),
-        ],
-      ),
-    );
-  }
-
+        ),
+        Spacer(),
+        CustomImageView(
+          svgPath: AppIcons.imgArrowright,
+          height: getVerticalSize(14),
+          width: getHorizontalSize(8),
+          margin: getMargin(
+            top: 8,
+            bottom: 3,
+          ),
+        ),
+      ],
+    ),
+  );
+}
 
 onTapSignOut(BuildContext context) async {
   try {
     await StorageService().deleteAll();
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const LoginPage()),
-    );
+
+    Navigator.of(context, rootNavigator: true).pushReplacement(
+        MaterialPageRoute(builder: (context) => LoginPage()));
   } catch (e) {
     print('Error during sign out: $e');
     // Handle errors as needed

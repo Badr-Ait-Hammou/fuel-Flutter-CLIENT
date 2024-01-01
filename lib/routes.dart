@@ -13,7 +13,6 @@ class Routes {
   static const String dashboard = '/dashboard';
   static const String homeScreen = '/home';
   static const String profileScreen = '/profile';
-  // static const String opsScreen = '/operations';
   static Map<String, WidgetBuilder> routes = {
     splashScreen: (context) => SplashPage(),
     loginScreen: (context) => LoginPage(),
