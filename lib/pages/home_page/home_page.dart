@@ -209,31 +209,31 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
   Widget totalOperationsCard(List<List<dynamic>> fuelAmounts) {
     return Container(
-        padding: getPadding(
-          left: 16,
-          top: 20,
-          right: 16,
-          bottom: 12,
-        ),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: Colors.grey[100],
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.4),
-              offset: Offset(2, 4),
-              blurRadius: 5,
-            ),
-          ],
-          border: Border.all(
-            color: Colors.black,
-            width: 1,
+      padding: getPadding(
+        left: 16,
+        top: 20,
+        right: 16,
+        bottom: 12,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Colors.grey[100],
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.4),
+            offset: Offset(2, 4),
+            blurRadius: 5,
           ),
+        ],
+        border: Border.all(
+          color: Colors.black,
+          width: 1,
         ),
-        child: Column(children: [
+      ),
+      child: Column(
+        children: [
           for (var fuelAmount in fuelAmounts)
             Container(
               margin: EdgeInsets.only(bottom: 16),
@@ -260,38 +260,54 @@ class _HomePageState extends State<HomePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
-                          "${fuelAmount[0]}:",
-                          style: CustomTextStyles.titleMedium18,
+                        Row(
+                          children: [
+                            const Icon(Icons.merge_type_outlined, size: 20, color: Colors.black),
+                            const SizedBox(width: 5),
+                            Text(
+                              "${fuelAmount[0]}:",
+                              style: CustomTextStyles.titleMedium18,
+                            ),
+                          ],
                         ),
-                        Text(
-                          "${fuelAmount[2].toStringAsFixed(2)} Liters",
-                          style: CustomTextStyles.titleMediumDeeporangeA700,
+                        Row(
+                          children: [
+                            Icon(Icons.local_gas_station, size: 20, color: Colors.black),
+                            SizedBox(width: 5),
+                            Text(
+                              "${fuelAmount[2].toStringAsFixed(2)} Liters",
+                              style: CustomTextStyles.titleMediumDeeporangeA700,
+                            ),
+                          ],
                         ),
-
                       ],
                     ),
                   ),
-                  const Spacer(),
+                  Spacer(),
                   Padding(
                     padding: getPadding(
                       top: 10,
                       right: 10,
                       bottom: 30,
                     ),
-                    child: Text(
-                      "${fuelAmount[1]} Dhs",
-                      style: CustomTextStyles.titleMediumTealA700,
+                    child: Row(
+                      children: [
+                        Icon(Icons.attach_money, size: 20, color: Colors.teal),
+                        SizedBox(width: 5),
+                        Text(
+                          "${fuelAmount[1]} Dhs",
+                          style: const TextStyle(
+                            color: Color.fromRGBO(0, 150, 136, 1.0)),
+                        ),
+                      ],
                     ),
-
                   ),
-
                 ],
               ),
-
             ),
-
-        ]));
+        ],
+      ),
+    );
   }
 
   Widget priceCard({

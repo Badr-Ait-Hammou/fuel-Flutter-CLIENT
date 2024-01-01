@@ -254,72 +254,96 @@ class _DashboardPageState extends State<DashboardPage> {
                                       borderRadius: BorderRadius.circular(15),
                                       color: Colors.white,
                                     ),
-                                    child: Row(
-                                      children: [
-                                        CustomIconButton(
-                                          height: getSize(56),
-                                          width: getSize(56),
-                                          padding: getPadding(
-                                            all: 16,
+                                     child: Row(
+                                        children: [
+                                          CustomIconButton(
+                                            height: getSize(40),
+                                            width: getSize(40),
+                                            padding: getPadding(
+                                              all: 1,
+                                            ),
+                                            decoration: IconButtonStyleHelper.fillGray1,
+                                            child: CustomImageView(
+                                              svgPath: AppIcons.slpashIcon,
+                                            ),
                                           ),
-                                          decoration:
-                                              IconButtonStyleHelper.fillGray1,
-                                          child: CustomImageView(
-                                            svgPath: AppIcons.slpashIcon,
+                                          Padding(
+                                            padding: getPadding(
+                                              left: 12,
+                                              right: 12,
+                                              top: 4,
+                                              bottom: 3,
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    const Icon(Icons.merge_type_outlined, size: 20, color: Colors.black),
+                                                    const SizedBox(width: 5),
+                                                    Text(
+                                                      "${transaction.type}",
+                                                      style: CustomTextStyles.titleMedium18,
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Icon(Icons.date_range, size: 20, color: Colors.black),
+                                                    SizedBox(width: 5),
+                                                    Text(
+                                                      formattedDate,
+                                                      style: CustomTextStyles.bodyMedium13,
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Icon(Icons.local_gas_station, size: 20, color: Colors.black),
+                                                    SizedBox(width: 5),
+                                                    Text(
+                                                      "${transaction.litre} L",
+                                                      style: CustomTextStyles.bodyMedium13,
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Icon(Icons.attach_money, size: 20, color: Colors.black),
+                                                    SizedBox(width: 5),
+                                                    Text(
+                                                      "${transaction.price} Dhs",
+                                                      style: CustomTextStyles.bodyMedium13,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: getPadding(
-                                            left: 12,
-                                            right: 12,
-                                            top: 4,
-                                            bottom: 3,
+                                          const Spacer(),
+                                          Padding(
+                                            padding: getPadding(
+                                              top: 3,
+                                              right: 1,
+                                              bottom: 25,
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Icon(Icons.monetization_on, size: 20, color: Colors.deepOrange),
+                                                SizedBox(width: 5),
+                                                Text(
+                                                  "${transaction.totale} Dhs",
+                                                  style: CustomTextStyles.titleMediumDeeporangeA700,
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "${transaction.type}",
-                                                style: CustomTextStyles
-                                                    .titleMedium18,
-                                              ),
-                                              Text(
-                                                formattedDate,
-                                                style: CustomTextStyles
-                                                    .bodyMedium13,
-                                              ),
-                                              Text(
-                                                "${transaction.litre} L",
-                                                style: CustomTextStyles
-                                                    .bodyMedium13,
-                                              ),
-                                              Text(
-                                                "${transaction.price} Dhs",
-                                                style: CustomTextStyles
-                                                    .bodyMedium13,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        const Spacer(),
-                                        Padding(
-                                          padding: getPadding(
-                                            top: 3,
-                                            right: 1,
-                                            bottom: 25,
-                                          ),
-                                          child: Text(
-                                            "${transaction.totale} Dhs",
-                                            style: CustomTextStyles
-                                                .titleMediumDeeporangeA700,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ));
+                                        ],
+                                      )
+
+                                  )
+                              );
                             },
                           ),
                         ),

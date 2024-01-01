@@ -137,7 +137,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           Align(
                               alignment: Alignment.centerLeft,
                               child: Padding(
-                                  padding: getPadding(top: 20),
+                                  padding: getPadding(top: 5),
                                   child: Text(" Email",
                                       style: CustomTextStyles.bodyLargeGray700))),
                           CustomTextFormField(
@@ -162,7 +162,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           Align(
                               alignment: Alignment.centerLeft,
                               child: Padding(
-                                  padding: getPadding(top: 20),
+                                  padding: getPadding(top: 5),
                                   child: Text(" Set Password",
                                       style: CustomTextStyles.bodyLargeGray700))),
                           CustomTextFormField(
@@ -198,7 +198,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           Align(
                               alignment: Alignment.centerLeft,
                               child: Padding(
-                                  padding: getPadding(top: 20),
+                                  padding: getPadding(top: 5),
                                   child: Text(" Confirm Password",
                                       style: CustomTextStyles.bodyLargeGray700))),
                           CustomTextFormField(
@@ -247,7 +247,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                           CustomOutlinedButton(
                               text: "Sign up with Google",
-                              margin: getMargin(top: 20),
+                              margin: getMargin(top: 10),
                               leftIcon: Container(
                                   margin: getMargin(right: 16),
                                   child: CustomImageView(
