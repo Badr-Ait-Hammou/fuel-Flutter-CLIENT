@@ -91,7 +91,7 @@ class _DashboardPageState extends State<DashboardPage> {
       appBar: CustomAppBar(
         leadingWidth: getHorizontalSize(68),
         leading: AppbarImage(
-          svgPath: AppIcons.imgGrid,
+          svgPath: AppIcons.whiteLogo,
           margin: getMargin(left: 24, top: 6, bottom: 6),
         ),
         title: AppbarTitle(text: "Dashboard", margin: getMargin(left: 23)),

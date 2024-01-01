@@ -40,23 +40,19 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: CustomAppBar(
         leadingWidth: getHorizontalSize(68),
         leading: AppbarImage(
-          svgPath: AppIcons.slpashIcon,
-          margin: getMargin(
-            left: 24,
-            top: 6,
-            bottom: 6,
-          ),
+          svgPath: AppIcons.whiteLogo,
+          margin: getMargin(left: 24, top: 6, bottom: 6),
         ),
-        centerTitle: true,
         title: AppbarTitle(
           text: "Profile",
+          margin: getMargin(left: 23),
         ),
       ),
       body: FutureBuilder(
         future: _userDataFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data == null) {
@@ -72,10 +68,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 bottom: 31,
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CustomImageView(
-                    imagePath: AppIcons.imgEllipse107,
+                    imagePath: AppIcons.imgProfile,
                     height: getSize(139),
                     width: getSize(139),
                     radius: BorderRadius.circular(
@@ -93,7 +89,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   Padding(
                     padding: getPadding(
-                      top: 8,
+                      top: 1,
                     ),
                     child: Text(
                       userData.email,

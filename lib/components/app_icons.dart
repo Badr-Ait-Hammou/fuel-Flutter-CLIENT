@@ -5,6 +5,7 @@ class AppIcons {
   static const String imgGoogle = 'assets/images/img_google.svg';
   static const String imgHome = 'assets/images/img_home.svg';
   static const String imgNavcard = 'assets/images/img_navcard.svg';
+  static const String imgArrowDown = 'assets/images/img_arrowleft2.svg';
   static const String imgNavactivity = 'assets/images/img_navactivity.svg';
   static const String imgNavprofile = 'assets/images/img_navprofile.svg';
   static const String imgGrid = 'assets/images/img_grid.svg';
@@ -17,6 +18,8 @@ class AppIcons {
   static const String imgInfo = 'assets/images/img_info.svg';
   static const String imgGlobe = 'assets/images/img_globe.svg';
   static const String imgUser = 'assets/images/img_user.svg';
-  static const String imgLogout = 'assets/images/img_contrast.svg';
+  static const String imgContrast = 'assets/images/img_contrast.svg';
   static const String imgnavArrow = 'assets/images/img_eye_primary.svg';
+  static const String whiteLogo = 'assets/images/fuelpulsewhite.svg';
+  static const String imgProfile = 'assets/images/img_oval_3.png';
 }
