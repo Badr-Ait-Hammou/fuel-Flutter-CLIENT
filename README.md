@@ -1,11 +1,15 @@
 ## Fuel Pulse: Track Your Gas Consumption and Save Money
 # Fuel Pulse is the ultimate mobile app for anyone who wants to take control of their gas spending. 
-Developed by me and my dearest friend @AnasJeg , Fuel Pulse empowers you to:
+<h4 align="start"> Developed by me and my dearest friend   <a href="https://github.com/AnasJeg" >👨‍💻 Anas Jegoual </a>, Fuel Pulse empowers you to:</h4>
   1. Track Your Every Fill: Simply record the amount you pump and the app automatically calculates your fuel efficiency, cost per trip, and more.
+  
   2. Stay Ahead of the Curve: Get daily updates on current gas prices near you, ensuring you always refuel at the best deal.
+     
   3. Gain Valuable Insights: Fuel Pulse goes beyond tracking, it analyzes your data to reveal your driving habits and fuel consumption patterns, helping you identify areas for     
     improvement.
+
   4. Set and Achieve Goals: Track your progress towards personalized fuel consumption goals and celebrate your victories along the way.
+ 
   5. Say Goodbye to Paperwork: Export your data to spreadsheets or other platforms for easy expense tracking and reporting.
  ## App :
 
