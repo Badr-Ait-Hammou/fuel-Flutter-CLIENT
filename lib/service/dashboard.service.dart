@@ -4,6 +4,7 @@ import 'package:fuelflutter/service/storage.service.dart';
 import 'package:fuelflutter/service/user.service.dart';
 import 'package:http/http.dart' as http;
 import '../core/utils/api_url.dart';
+import '../model/chart.dart';
 class DashboardService {
   Future<List<TransactionData>> getUserTransactions() async {
     try {
@@ -60,4 +61,33 @@ class DashboardService {
     }
   }
 
+  Future<List<ChartDataOne>> getPieOne() async {
+    try {
+      final token = await StorageService().getToken();
+      final Map<String, dynamic>? decodedToken =
+      await UserService().decodeToken();
+      if (decodedToken != null && decodedToken.containsKey('id')) {
+        final headers = {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        };
+
+        final response = await http.get(
+          Uri.parse('${ApiUrl.springUrl}/api/fuel/pie/${decodedToken['id']}'),
+          headers: headers,
+        );
+
+        if (response.statusCode == 200) {
+          final List<dynamic> data = json.decode(response.body);
+          return data.map((item) => ChartDataOne.fromJson(item)).toList();
+        } else {
+          throw Exception('Failed to load fuel prices');
+        }
+      }
+    } catch (e) {
+      throw Exception('Error fetching fuel prices: $e');
+    }
+
+    throw Exception('Unexpected error occurred');
+    }
 }

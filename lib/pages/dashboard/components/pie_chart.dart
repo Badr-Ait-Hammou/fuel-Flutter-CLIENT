@@ -1,180 +1,110 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:fuelflutter/model/fuel.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
-class PieChart extends StatelessWidget {
-  const PieChart({super.key});
+import '../../../model/chart.dart';
+
+class PieChartDash extends StatelessWidget {
+  final List<ChartDataOne> dataSource;
+
+  const PieChartDash({Key? key, required this.dataSource}) : super(key: key);
+
+  double calculateRequiredWidth(String headerText, String montantText) {
+    final textMaxWidth = headerText.length > montantText.length
+        ? headerText.length
+        : montantText.length;
+    return textMaxWidth * 10;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      flex: 4,
-      child: LayoutBuilder(
-        builder: (context, constraint) => Container(
-          decoration: BoxDecoration(
-            color: Color.fromRGBO(193, 214, 233, 1),
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                spreadRadius: -10,
-                blurRadius: 17,
-                offset: Offset(-5, -5),
-                color: Colors.white,
-              ),
-              BoxShadow(
-                spreadRadius: -2,
-                blurRadius: 10,
-                offset: Offset(7, 7),
-                color: Color.fromRGBO(146, 182, 216, 1),
-              )
-            ],
-          ),
-          child: Stack(
+    final mediaQuery = MediaQuery.of(context);
+    final screenWidth = mediaQuery.size.width;
+    final screenHeight = mediaQuery.size.height;
+    final isPortrait = mediaQuery.orientation == Orientation.portrait;
+
+    return SizedBox(
+        width: isPortrait ? screenWidth * 0.9 : screenHeight * 0.5,
+        height: isPortrait ? screenWidth * 0.9 : screenHeight * 0.5,
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(
-                child: SizedBox(
-                  width: constraint.maxWidth * 0.6,
-                  child: CustomPaint(
-                    child: Center(),
-                    foregroundPainter: PieChartComponent(
-                      width: constraint.maxWidth * 0.5,
-                      categories: kCategories,
-                    ),
-                  ),
+              SizedBox(
+                height: 100,
+                child: ListView.builder(
+                  itemCount: dataSource.length,
+                  itemBuilder: (context, index) {
+                    final data = dataSource[index];
+
+                    return Padding(
+                      padding: EdgeInsets.symmetric(vertical: 2.0),
+                      child: Row(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(40),
+                              color: kNeumorphicColorsPieOne[
+                              dataSource.indexOf(dataSource[index]) %
+                                  kNeumorphicColorsPieOne.length],
+                            ),
+                            height: 15,
+                            width: 15,
+                          ),
+                          SizedBox(width: 2),
+                          Text(
+                            "${data.label}:",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            "${data.totale} MAD",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ),
-              Center(
-                child: Container(
-                  height: constraint.maxWidth * 0.4,
-                  decoration: BoxDecoration(
-                    color: Color.fromRGBO(193, 214, 233, 1),
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 1,
-                        offset: Offset(-1, -1),
-                        color: Colors.white,
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 15.0),
+                child: LayoutBuilder(
+                  builder: (BuildContext context, BoxConstraints constraints) {
+                    double aspectRatio = 1.0;
+                    if (MediaQuery.of(context).orientation ==
+                        Orientation.portrait) {
+                      aspectRatio = 1.2;
+                    } else {
+                      aspectRatio = 2.0;
+                    }
+                    return AspectRatio(
+                      aspectRatio: aspectRatio,
+                      child: SfCircularChart(
+                        series: <CircularSeries>[
+                          PieSeries<ChartDataOne, String>(
+                            dataSource: dataSource,
+                            xValueMapper: (ChartDataOne sales, _) => sales.label,
+                            yValueMapper: (ChartDataOne sales, _) => sales.litres,
+                            pointColorMapper: (ChartDataOne sales, _) =>
+                            kNeumorphicColorsPieOne[dataSource.indexOf(sales) %
+                                kNeumorphicColorsPieOne.length],
+                            dataLabelSettings: DataLabelSettings(isVisible: true),
+                          ),
+                        ],
                       ),
-                      BoxShadow(
-                        spreadRadius: -2,
-                        blurRadius: 10,
-                        offset: Offset(5, 5),
-                        color: Colors.black.withOpacity(0.5),
-                      )
-                    ],
-                  ),
-                  child: Center(
-                    child: Text('\$1280.20'),
-                  ),
+                    );
+                  },
                 ),
               ),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class PieChartComponent extends CustomPainter {
-  PieChartComponent({required this.categories, required this.width});
-
-  final List<Category> categories;
-  final double width;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    Offset center = Offset(size.width / 2, size.height / 2);
-    double radius = min(size.width / 2, size.height / 2);
-
-    var paint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = width / 2;
-
-    double total = 0;
-
-    categories.forEach((expense) => total += expense.amount);
-
-    double startRadian = -pi / 2;
-
-    for (var index = 0; index < categories.length; index++) {
-      final currentCategory = categories.elementAt(index);
-
-      final sweepRadian = currentCategory.amount / total * 2 * pi;
-
-      paint.color = kNeumorphicColors.elementAt(index % categories.length);
-      canvas.drawArc(
-        Rect.fromCircle(center: center, radius: radius),
-        startRadian,
-        sweepRadian,
-        false,
-        paint,
-      );
-
-      startRadian += sweepRadian;
-    }
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => true;
-}
-
-class CategoriesRow extends StatelessWidget {
-  const CategoriesRow({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      flex: 3,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          for (var category in kCategories)
-            ExpenseCategory(
-                text: category.name, index: kCategories.indexOf(category))
-        ],
-      ),
-    );
-  }
-}
-
-class ExpenseCategory extends StatelessWidget {
-  const ExpenseCategory({
-    Key? key,
-    required this.index,
-    required this.text,
-  }) : super(key: key);
-
-  final int index;
-  final String text;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 10),
-      child: Row(
-        children: <Widget>[
-          Container(
-            width: 7,
-            height: 7,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color:
-                  kNeumorphicColors.elementAt(index % kNeumorphicColors.length),
             ),
-          ),
-          SizedBox(width: 20),
-          Text(text.capitalize()),
-        ],
-      ),
     );
-  }
-}
-
-extension StringExtension on String {
-  String capitalize() {
-    return "${this[0].toUpperCase()}${this.substring(1)}";
   }
 }

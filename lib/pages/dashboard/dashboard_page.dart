@@ -7,16 +7,12 @@ import 'package:fuelflutter/core/utils/size_utils.dart';
 import 'package:fuelflutter/model/chart.dart';
 import 'package:fuelflutter/pages/dashboard/components/custom_card.dart';
 import 'package:fuelflutter/pages/dashboard/components/pie_chart.dart';
-import 'package:fuelflutter/pages/dashboard/components/pie_chart_component.dart';
 import '../../components/custom_icon_button.dart';
 import '../../components/custom_image_view.dart';
 import '../../model/operation.model.dart';
 import '../../service/dashboard.service.dart';
-import '../../theme/app_decoration.dart';
 import '../../theme/custom_text_style.dart';
 import '../../theme/theme_helper.dart';
-import 'components/fl_pie_chart2.dart';
-import 'components/linear_chart.dart';
 import 'package:intl/intl.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -33,6 +29,7 @@ class _DashboardPageState extends State<DashboardPage> {
   void initState() {
     super.initState();
     _fetchTransactions();
+    init();
   }
 
   Future<void> _fetchTransactions() async {
@@ -46,25 +43,38 @@ class _DashboardPageState extends State<DashboardPage> {
     }
   }
 
+  List<ChartDataOne> chatOne = [];
+  List<ChartDataOne> chatOneFinal = [];
+
+  Future<void> init() async {
+    chatOne = await DashboardService().getPieOne();
+    if (chatOne.isNotEmpty) {
+      setState(() {
+        chatOneFinal = chatOne;
+      });
+    }
+    print(chatOne);
+    }
+
   void _deleteTransaction(int transactionId) async {
     bool confirmDelete = await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Confirm Delete"),
-          content: Text("Are you sure you want to delete this transaction?"),
+          title: const Text("Confirm Delete"),
+          content: const Text("Are you sure you want to delete this transaction?"),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(false);
               },
-              child: Text("Cancel"),
+              child: const Text("Cancel"),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(true);
               },
-              child: Text("Delete"),
+              child: const Text("Delete"),
             ),
           ],
         );
@@ -98,94 +108,91 @@ class _DashboardPageState extends State<DashboardPage> {
       ),
       body: SafeArea(
         child: ListView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           children: <Widget>[
+            // CustomCard(
+            //   title: 'CHART',
+            //   content: PieChartDash(
+            //     dataSource: kChartData,
+            //   ),
+            // ),
             CustomCard(
-              title: 'CHART',
-              content: PieChartDash(
-                dataSource: kChartData,
-              ),
-            ),
-            const CustomCard(
-              title: 'CHART',
-              content: Row(
-                children: <Widget>[
-                  CategoriesRow(),
-                  PieChart(),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: height * 0.43,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(height: height * 0.065),
-                    const Text(
-                      'Monthly Expenses',
-                    ),
-                    const Expanded(
-                      child: Row(
-                        children: <Widget>[
-                          CategoriesRow(),
-                          PieChart(),
-                        ],
-                      ),
-                    ),
-                  ],
+                title: 'CHART',
+                content: PieChartDash(
+                  dataSource: chatOneFinal,
                 ),
-              ),
             ),
-            CustomCard(
-              title: 'Monthly Expenses',
-              content: SizedBox(
-                height: height * 0.55,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(height: height * 0.0001),
-                      const Text(
-                        'Monthly Expenses',
-                      ),
-                      const Expanded(
-                        child: AspectRatio(
-                          aspectRatio: 20 / 9,
-                          child: LineChartSample1(),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            CustomCard(
-              title: 'Monthly Expenses',
-              content: SizedBox(
-                height: height * 0.55,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(height: height * 0.0001),
-                      const Text(
-                        'Monthly Expenses',
-                      ),
-                      const Expanded(
-                        child: AspectRatio(
-                          aspectRatio: 20 / 9,
-                          child: PieChartSample2(),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            // SizedBox(
+            //   height: height * 0.43,
+            //   child: Padding(
+            //     padding: const EdgeInsets.symmetric(horizontal: 25.0),
+            //     child: Column(
+            //       crossAxisAlignment: CrossAxisAlignment.start,
+            //       children: <Widget>[
+            //         SizedBox(height: height * 0.065),
+            //         const Text(
+            //           'Monthly Expenses',
+            //         ),
+            //         const Expanded(
+            //           child: Row(
+            //             children: <Widget>[
+            //               CategoriesRow(),
+            //               PieChart(),
+            //             ],
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+            // CustomCard(
+            //   title: 'Monthly Expenses',
+            //   content: SizedBox(
+            //     height: height * 0.55,
+            //     child: Padding(
+            //       padding: const EdgeInsets.symmetric(horizontal: 5.0),
+            //       child: Column(
+            //         crossAxisAlignment: CrossAxisAlignment.start,
+            //         children: <Widget>[
+            //           SizedBox(height: height * 0.0001),
+            //           const Text(
+            //             'Monthly Expenses',
+            //           ),
+            //           const Expanded(
+            //             child: AspectRatio(
+            //               aspectRatio: 20 / 9,
+            //               child: LineChartSample1(),
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            // CustomCard(
+            //   title: 'Monthly Expenses',
+            //   content: SizedBox(
+            //     height: height * 0.55,
+            //     child: Padding(
+            //       padding: const EdgeInsets.symmetric(horizontal: 5.0),
+            //       child: Column(
+            //         crossAxisAlignment: CrossAxisAlignment.start,
+            //         children: <Widget>[
+            //           SizedBox(height: height * 0.0001),
+            //           const Text(
+            //             'Monthly Expenses',
+            //           ),
+            //           const Expanded(
+            //             child: AspectRatio(
+            //               aspectRatio: 20 / 9,
+            //               child: PieChartSample2(),
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // ),
             CustomCard(
               title:'My Expenses',
               content: SizedBox(
@@ -283,15 +290,15 @@ class _DashboardPageState extends State<DashboardPage> {
                                                     const Icon(Icons.merge_type_outlined, size: 20, color: Colors.black),
                                                     const SizedBox(width: 5),
                                                     Text(
-                                                      "${transaction.type}",
+                                                      transaction.type,
                                                       style: CustomTextStyles.titleMedium18,
                                                     ),
                                                   ],
                                                 ),
                                                 Row(
                                                   children: [
-                                                    Icon(Icons.date_range, size: 20, color: Colors.black),
-                                                    SizedBox(width: 5),
+                                                    const Icon(Icons.date_range, size: 20, color: Colors.black),
+                                                    const SizedBox(width: 5),
                                                     Text(
                                                       formattedDate,
                                                       style: CustomTextStyles.bodyMedium13,
@@ -300,8 +307,8 @@ class _DashboardPageState extends State<DashboardPage> {
                                                 ),
                                                 Row(
                                                   children: [
-                                                    Icon(Icons.local_gas_station, size: 20, color: Colors.black),
-                                                    SizedBox(width: 5),
+                                                    const Icon(Icons.local_gas_station, size: 20, color: Colors.black),
+                                                    const SizedBox(width: 5),
                                                     Text(
                                                       "${transaction.litre} L",
                                                       style: CustomTextStyles.bodyMedium13,
@@ -310,8 +317,8 @@ class _DashboardPageState extends State<DashboardPage> {
                                                 ),
                                                 Row(
                                                   children: [
-                                                    Icon(Icons.attach_money, size: 20, color: Colors.black),
-                                                    SizedBox(width: 5),
+                                                    const Icon(Icons.attach_money, size: 20, color: Colors.black),
+                                                    const SizedBox(width: 5),
                                                     Text(
                                                       "${transaction.price} Dhs",
                                                       style: CustomTextStyles.bodyMedium13,
@@ -330,8 +337,8 @@ class _DashboardPageState extends State<DashboardPage> {
                                             ),
                                             child: Row(
                                               children: [
-                                                Icon(Icons.monetization_on, size: 20, color: Colors.deepOrange),
-                                                SizedBox(width: 5),
+                                                const Icon(Icons.monetization_on, size: 20, color: Colors.deepOrange),
+                                                const SizedBox(width: 5),
                                                 Text(
                                                   "${transaction.totale} Dhs",
                                                   style: CustomTextStyles.titleMediumDeeporangeA700,
